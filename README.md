@@ -29,16 +29,18 @@ Optionally:
 # Usage
 
 * copy `example.config.sh` to `config.sh` and put some sensible values in there
-* put your PDFs (and any other documents) in `/files`
+* put your PDFs (and any other documents) in `./files`
 * run `./pack.sh -w 'Dodgy Client Inc.'`
-* you should have a file in `/output`
+* you should have a file in `./output`
 
-`-r` create a RAR instead of a ZIP
-`-p password` set the password (default: generate randomly)
-`-f size` adjust font size
+## Options
+* `-r` create a RAR instead of a ZIP
+* `-p password` set the password (default: generate randomly)
+* `-f size` adjust font size
 
 # Known issues
 
+* should probably ask for `-p` password with a prompt
 * will only watermark PDF files
 * will only watermark those in the root
 * probably breaks with subdirectories in the root
