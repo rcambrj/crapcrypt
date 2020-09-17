@@ -5,7 +5,7 @@ Want to send someone some *mildly sensitive* documents but don't have a secure c
 * takes a directory full of PDFs
 * puts a watermark on them
 * generates a random password
-* uploads the password to [OTS](onetimesecret.com)
+* uploads the password to [OTS](https://onetimesecret.com)
 * create a password-protected archive of the files
 * outputs the OTS link and the file
 
