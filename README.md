@@ -43,7 +43,7 @@ Optionally:
 
 # Known issues
 
-* should probably ask for `-p` password with a prompt
+* should probably ask for password with a prompt
 * will only watermark PDF files
 * will only watermark those in the root
 * probably breaks with subdirectories in the root
