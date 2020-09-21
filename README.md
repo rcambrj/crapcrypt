@@ -36,6 +36,7 @@ Optionally:
 * you should have a file in `./output`
 
 ## Options
+* `-w` specify the PDF watermark text
 * `-r` create a RAR instead of a ZIP
 * `-p password` set the password (default: generate randomly)
 * `-f size` adjust font size
