@@ -18,9 +18,10 @@ if [ -z "$WATERMARK_TEXT" ]; then
 fi
 
 if [ -z "$PASSWORD" ]; then
-  echo "Generating random password, override with -p"
   PASSWORD=`openssl rand -base64 12`
 fi
+
+OWNER_PASSWORD=`openssl rand -base64 12`
 
 if [ -z "$FONT_SIZE" ]; then
   FONT_SIZE=144
@@ -51,7 +52,7 @@ convert -page A4 -size 595x842 canvas:none -draw "image SrcOver 0,0 595,842 '$WA
 find $DIRNAME/files/* -print0 | while read -d $'\0' FILE_SRC; do
   FILE_DST="$ARCHIVE_DIR/`basename "$FILE_SRC"`"
   if [[ $FILE_SRC == *.pdf ]]; then
-    pdftk "$FILE_SRC" stamp "$WATERMARK_PDF" output "$FILE_DST"
+    pdftk "$FILE_SRC" stamp "$WATERMARK_PDF" output "$FILE_DST" owner_pw "$OWNER_PASSWORD"
   else
     cp -R "$FILE_SRC" "$FILE_DST"
   fi
@@ -70,4 +71,5 @@ fi
 if [ ! -z "$OTS_LINK" ]; then
   echo "OTS: https://onetimesecret.com/private/$OTS_LINK"
 fi
-echo "Password: $PASSWORD"
+echo "PDF password (for editing PDFs): $OWNER_PASSWORD"
+echo "Archive password: $PASSWORD"
