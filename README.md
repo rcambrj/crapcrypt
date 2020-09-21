@@ -19,12 +19,14 @@ All this said, this isn't supposed to be exhaustively secure. I built it because
 
 # Installation
 
-Requires `unzip`, `openssl`, `curl`, `jq`, `imagemagick`, `pdftk-java`. Install these with your favourite package manager.
+Install dependencies with your favourite package manager.
 
-```brew install unzip openssl curl jq imagemagick pdftk-java```
+```brew install coreutils unzip openssl curl jq imagemagick pdftk-java```
 
 Optionally:
 ```brew cask install rar```
+
+> note: coreutils is for `realpath`
 
 # Usage
 
