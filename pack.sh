@@ -29,8 +29,8 @@ fi
 
 if [ ! -z "$OTS_KEY" ]; then
   OTS_RESULT=`curl -s -d "secret=$PASSWORD&ttl=$OTS_TTL" -u "$OTS_KEY" https://onetimesecret.com/api/v1/share`
-  # OTS_RESULT='{"secret_key":"a1b2c3d4e5f6"}' # testing
-  OTS_LINK=`echo $OTS_RESULT | jq -r '.secret_key'`
+  # OTS_RESULT='{"metadata_key":"a1b2c3d4e5f6"}' # testing
+  OTS_LINK=`echo $OTS_RESULT | jq -r '.metadata_key'`
 fi
 
 TMP_DIR="$DIRNAME/tmp"
@@ -69,7 +69,7 @@ else
 fi
 
 if [ ! -z "$OTS_LINK" ]; then
-  echo "OTS: https://onetimesecret.com/private/$OTS_LINK"
+  echo "OTS: https://onetimesecret.com/private/$OTS_LINK (don't click this link!)"
 fi
 echo "PDF password (for editing PDFs): $OWNER_PASSWORD"
 echo "Archive password: $PASSWORD"
