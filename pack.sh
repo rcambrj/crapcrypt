@@ -3,14 +3,40 @@
 DIRNAME=`realpath $(dirname "$0")`
 source $DIRNAME/config.sh
 
-while getopts w:p:rf: OPTNAME; do
+while getopts w:p:rf:o:h OPTNAME; do
   case "${OPTNAME}" in
+    h) HELP="1";;
     w) WATERMARK_TEXT=${OPTARG};;
     p) PASSWORD=${OPTARG};;
     r) USE_RAR=1;;
     f) FONT_SIZE=${OPTARG};;
+    o) OPACITY=${OPTARG};;
   esac
 done
+
+if [ ! -z "$HELP" ]; then
+  echo 'crapcrypt v0'
+  echo '  * takes a directory full of PDFs (./files)'
+  echo '  * puts a watermark on them'
+  echo '  * generates a random password'
+  echo '  * uploads the password to https://onetimesecret.com'
+  echo '  * creates a password-protected archive of the files (./output)'
+  echo '  * outputs the OTS link and the file'
+  echo ''
+  echo 'example: ./pack.sh -w "Hello World"'
+  echo '  ARCHIVE_NAME= the name of the archive'
+  echo '  OTS_KEY= if specified, upload to https://onetimesecret.com'
+  echo '  OTS_TTL= the length of time for which the OTS should be valid'
+  echo ''
+  echo '  -h display help'
+  echo '  -w specify the PDF watermark text'
+  echo '  -o number specify the opacity of the watermark (0.0 - 1.0, default: 0.25)'
+  echo '  -f number adjust font size of the watermark (default: 144)'
+  echo '  -r create a RAR instead of a ZIP'
+  echo '  -p password set the password (default: generate randomly)'
+
+  exit 0;
+fi
 
 if [ -z "$WATERMARK_TEXT" ]; then
   echo "You must specify the watermark text with -w"
@@ -25,6 +51,9 @@ OWNER_PASSWORD=`openssl rand -base64 12`
 
 if [ -z "$FONT_SIZE" ]; then
   FONT_SIZE=144
+fi
+if [ -z "$OPACITY" ]; then
+  OPACITY=0.25
 fi
 
 if [ ! -z "$OTS_KEY" ]; then
@@ -46,7 +75,7 @@ rm -rf "$TMP_DIR"
 mkdir -p "$ARCHIVE_DIR"
 mkdir -p "$OUT_DIR"
 
-convert -background transparent -fill 'graya(50%,0.25)' -size 1000x$FONT_SIZE -gravity center -pointsize $FONT_SIZE -rotate -54.753 label:"$WATERMARK_TEXT" "$WATERMARK_PNG"
+convert -background transparent -fill "graya(50%,$OPACITY)" -size 1000x$FONT_SIZE -gravity center -pointsize $FONT_SIZE -rotate -54.753 label:"$WATERMARK_TEXT" "$WATERMARK_PNG"
 convert -page A4 -size 595x842 canvas:none -draw "image SrcOver 0,0 595,842 '$WATERMARK_PNG'" -gravity center "$WATERMARK_PDF"
 
 find $DIRNAME/files/* -print0 | while read -d $'\0' FILE_SRC; do

@@ -36,10 +36,12 @@ Optionally:
 * you should have a file in `./output`
 
 ## Options
+* `-h` display help
 * `-w` specify the PDF watermark text
+* `-o number` specify the opacity of the watermark (0.0 - 1.0, default: 0.25)
+* `-f number` adjust font size of the watermark (default: 144)
 * `-r` create a RAR instead of a ZIP
 * `-p password` set the password (default: generate randomly)
-* `-f size` adjust font size
 
 # Known issues
 
