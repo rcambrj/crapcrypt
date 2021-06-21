@@ -3,9 +3,10 @@
 DIRNAME=`realpath $(dirname "$0")`
 source $DIRNAME/config.sh
 
-while getopts w:p:rf:o:h OPTNAME; do
+while getopts w:p:rf:o:hu OPTNAME; do
   case "${OPTNAME}" in
     h) HELP="1";;
+    u) UPLOAD="1";;
     w) WATERMARK_TEXT=${OPTARG};;
     p) PASSWORD=${OPTARG};;
     r) USE_RAR=1;;
@@ -30,10 +31,11 @@ if [ ! -z "$HELP" ]; then
   echo ''
   echo '  -h display help'
   echo '  -w specify the PDF watermark text'
-  echo '  -o number specify the opacity of the watermark (0.0 - 1.0, default: 0.25)'
-  echo '  -f number adjust font size of the watermark (default: 144)'
+  echo '  -o specify the opacity of the watermark (0.0 - 1.0, default: 0.25)'
+  echo '  -f adjust font size of the watermark (default: 144)'
   echo '  -r create a RAR instead of a ZIP'
   echo '  -p password set the password (default: generate randomly)'
+  echo '  -u upload the password to onetimesecret.com (requires OTS_KEY and OTS_TTL)'
 
   exit 0;
 fi
@@ -56,7 +58,7 @@ if [ -z "$OPACITY" ]; then
   OPACITY=0.25
 fi
 
-if [ ! -z "$OTS_KEY" ]; then
+if [ ! -z "$OTS_KEY" ] && [ ! -z "$UPLOAD" ]; then
   OTS_RESULT=`curl -s -d "secret=$PASSWORD&ttl=$OTS_TTL" -u "$OTS_KEY" https://onetimesecret.com/api/v1/share`
   # OTS_RESULT='{"metadata_key":"a1b2c3d4e5f6"}' # testing
   OTS_LINK=`echo $OTS_RESULT | jq -r '.metadata_key'`

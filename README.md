@@ -42,6 +42,7 @@ Optionally:
 * `-f number` adjust font size of the watermark (default: 144)
 * `-r` create a RAR instead of a ZIP
 * `-p password` set the password (default: generate randomly)
+* `-u` upload the password to onetimesecret.com (requires OTS_KEY and OTS_TTL)'
 
 # Known issues
 
