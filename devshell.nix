@@ -13,7 +13,11 @@ pkgs.mkShell {
   ];
 
   # Add environment variables
-  env = { };
+  env = {
+    FONTCONFIG_FILE = pkgs.makeFontsConf {
+      fontDirectories = [ pkgs.freefont_ttf ];
+    };
+   };
 
   # Load custom bash code
   shellHook = ''

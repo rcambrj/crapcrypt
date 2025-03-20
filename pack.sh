@@ -77,8 +77,22 @@ rm -rf "$TMP_DIR"
 mkdir -p "$ARCHIVE_DIR"
 mkdir -p "$OUT_DIR"
 
-convert -background transparent -fill "graya(50%,$OPACITY)" -size 1000x$FONT_SIZE -gravity center -pointsize $FONT_SIZE -rotate -54.753 label:"$WATERMARK_TEXT" "$WATERMARK_PNG"
-convert -page A4 -size 595x842 canvas:none -draw "image SrcOver 0,0 595,842 '$WATERMARK_PNG'" -gravity center "$WATERMARK_PDF"
+magick \
+  -background transparent \
+  -fill "graya(50%,$OPACITY)" \
+  -size 1000x$FONT_SIZE \
+  -gravity center \
+  -pointsize $FONT_SIZE \
+  label:"$WATERMARK_TEXT" \
+  -rotate -54.753 \
+  "$WATERMARK_PNG"
+magick \
+  -page A4 \
+  -size 595x842 \
+  canvas:none \
+  -draw "image SrcOver 0,0 595,842 '$WATERMARK_PNG'" \
+  -gravity center \
+  "$WATERMARK_PDF"
 
 find $DIRNAME/files/* -print0 | while read -d $'\0' FILE_SRC; do
   FILE_DST="$ARCHIVE_DIR/`basename "$FILE_SRC"`"
