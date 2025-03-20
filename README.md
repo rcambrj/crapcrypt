@@ -19,7 +19,7 @@ All this said, this isn't supposed to be exhaustively secure. I built it because
 
 # Installation
 
-Install dependencies with your favourite package manager.
+Use [nix with direnv](https://github.com/nix-community/nix-direnv), or install dependencies manually:
 
 ```brew install coreutils unzip openssl curl jq imagemagick pdftk-java```
 
